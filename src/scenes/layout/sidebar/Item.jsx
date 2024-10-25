@@ -10,7 +10,13 @@ const Item = ({ title, path, icon }) => {
       to={path}
       icon={icon}
       rootStyles={{
-        color: path === location.pathname && "#6870fa",
+        backgroundColor: path === location.pathname && "#394867",
+        color: path === location.pathname && "#F5F5F5",
+        ":hover": {
+          color: "#394867",
+          backgroundColor: "#F5F5F5",
+          // transition: ".4s ease",
+        },
       }}
     >
       {title}

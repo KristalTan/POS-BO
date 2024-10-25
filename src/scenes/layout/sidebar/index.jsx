@@ -18,8 +18,7 @@ import {
   TimelineOutlined,
   WavesOutlined,
 } from "@mui/icons-material";
-import avatar from "../../../assets/images/avatar.png";
-import logo from "../../../assets/images/logo.png";
+import logo from "../../../assets/images/backend (2).png";
 import Item from "./Item";
 import { ToggledContext } from "../../../App";
 
@@ -30,7 +29,7 @@ const SideBar = () => {
   const colors = tokens(theme.palette.mode);
   return (
     <Sidebar
-      backgroundColor={colors.primary[400]}
+      backgroundColor={"#9BA4B4"}
       rootStyles={{
         border: 0,
         height: "100%",
@@ -47,86 +46,43 @@ const SideBar = () => {
       >
         <MenuItem
           rootStyles={{
-            margin: "10px 0 20px 0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height:"100px",
+            margin: "15px 0 10px 0",
             color: colors.gray[100],
           }}
         >
           <Box
             sx={{
+              
               display: "flex",
               alignItems: "center",
-              justifyContent: "space-between",
+              justifyContent: "center",
             }}
           >
             {!collapsed && (
               <Box
-                display="flex"
+                // display="flex"
                 alignItems="center"
-                gap="12px"
-                sx={{ transition: ".3s ease" }}
+                // sx={{ transition: ".3s ease" }}
               >
                 <img
-                  style={{ width: "30px", height: "30px", borderRadius: "8px" }}
+                  style={{ width: "100px", height: "100px" }}
                   src={logo}
-                  alt="Argon"
                 />
-                <Typography
-                  variant="h4"
-                  fontWeight="bold"
-                  textTransform="capitalize"
-                  color={colors.greenAccent[500]}
-                >
-                  Argon
-                </Typography>
+                
               </Box>
             )}
-            <IconButton onClick={() => setCollapsed(!collapsed)}>
-              <MenuOutlined />
-            </IconButton>
+           
           </Box>
         </MenuItem>
       </Menu>
-      {!collapsed && (
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            gap: "10px",
-            mb: "25px",
-          }}
-        >
-          <Avatar
-            alt="avatar"
-            src={avatar}
-            sx={{ width: "100px", height: "100px" }}
-          />
-          <Box sx={{ textAlign: "center" }}>
-            <Typography variant="h3" fontWeight="bold" color={colors.gray[100]}>
-              Tony Stark
-            </Typography>
-            <Typography
-              variant="h6"
-              fontWeight="500"
-              color={colors.greenAccent[500]}
-            >
-              VP Fancy Admin
-            </Typography>
-          </Box>
-        </Box>
-      )}
+      
 
-      <Box mb={5} pl={collapsed ? undefined : "5%"}>
+      <Box mb={5} py={collapsed ? undefined : "5%"}>
         <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
         >
           <Item
             title="Dashboard"
@@ -137,36 +93,29 @@ const SideBar = () => {
         </Menu>
         <Typography
           variant="h6"
-          color={colors.gray[300]}
+          fontWeight="bold"
+          color={"#F1F6F9"}
           sx={{ m: "15px 0 5px 20px" }}
         >
-          {!collapsed ? "Data" : " "}
+          PRODUCT SETTINGS
         </Typography>{" "}
         <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
+         
         >
           <Item
-            title="Manage Team"
-            path="/team"
+            title="Product Category"
+            path="/product-category"
             colors={colors}
             icon={<PeopleAltOutlined />}
           />
           <Item
-            title="Contacts Information"
+            title="Product Item "
             path="/contacts"
             colors={colors}
             icon={<ContactsOutlined />}
           />
           <Item
-            title="Invoices Balances"
+            title="Product Modifier"
             path="/invoices"
             colors={colors}
             icon={<ReceiptOutlined />}
@@ -174,21 +123,13 @@ const SideBar = () => {
         </Menu>
         <Typography
           variant="h6"
-          color={colors.gray[300]}
+          fontWeight="bold"
+          color={"#F1F6F9"}
           sx={{ m: "15px 0 5px 20px" }}
         >
-          {!collapsed ? "Pages" : " "}
+          STORE SETTINGS
         </Typography>
         <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
         >
           <Item
             title="Profile Form"
@@ -211,21 +152,14 @@ const SideBar = () => {
         </Menu>
         <Typography
           variant="h6"
-          color={colors.gray[300]}
+          color={"#F1F6F9"}
+          fontWeight="bold"
+          fontStyle="underline"
           sx={{ m: "15px 0 5px 20px" }}
         >
-          {!collapsed ? "Charts" : " "}
+          PAYMENT SETTINGS
         </Typography>
         <Menu
-          menuItemStyles={{
-            button: {
-              ":hover": {
-                color: "#868dfb",
-                background: "transparent",
-                transition: ".4s ease",
-              },
-            },
-          }}
         >
           <Item
             title="Bar Chart"

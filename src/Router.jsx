@@ -14,7 +14,13 @@ import {
   Geography,
   Calendar,
   Stream,
+  Prod_Category,
+  Add_Prod_Category
 } from "./scenes";
+
+// import{
+//   Add_Prod_Category,
+// } from "./scenes/prod_category"
 
 const AppRouter = () => {
   return (
@@ -33,6 +39,9 @@ const AppRouter = () => {
           <Route path="/line" element={<Line />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/geography" element={<Geography />} />
+          <Route path="/product-category" element={<Prod_Category />} />
+          <Route path="/product-category/add" element={<Add_Prod_Category />} />
+
         </Route>
       </Routes>
     </Router>

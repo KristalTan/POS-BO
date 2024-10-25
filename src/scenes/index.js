@@ -12,6 +12,9 @@ import Pie from "./pie";
 import Stream from "./stream";
 import FAQ from "./faq";
 import Geography from "./geography";
+import Prod_Category from "./prod_category";
+
+import Add_Prod_Category from "./prod_category/add_prod_category";
 
 export {
   Navbar,
@@ -28,4 +31,6 @@ export {
   Stream,
   FAQ,
   Geography,
+  Prod_Category,
+  Add_Prod_Category,
 };
