@@ -71,7 +71,7 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   
         <Box display="flex" alignItems="flex-end" justifyContent="flex-end" mb="2px">
           <IconButton onClick={handleAdd}>
-            <AddCircle style={{ color: "#272829", fontSize: "32px" }} />
+            <AddCircle style={{ color: "#272829", fontSize: "38px" }} />
           </IconButton>
         </Box>
   
