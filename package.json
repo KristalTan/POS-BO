@@ -19,6 +19,7 @@
     "@fullcalendar/react": "^6.1.11",
     "@fullcalendar/timegrid": "^6.1.11",
     "@mui/icons-material": "^5.15.10",
+    "@mui/lab": "^5.0.0-alpha.126",
     "@mui/material": "^5.15.10",
     "@mui/x-data-grid": "^6.19.5",
     "@nivo/bar": "^0.87.0",

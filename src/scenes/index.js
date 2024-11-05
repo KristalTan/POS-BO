@@ -12,9 +12,20 @@ import Pie from "./pie";
 import Stream from "./stream";
 import FAQ from "./faq";
 import Geography from "./geography";
-import Prod_Category from "./prod_category";
 
-import Add_Prod_Category from "./prod_category/add_prod_category";
+import Meal_Period from "./meal_period";
+
+import Prod_Category from "./prod_category";
+import Add_Prod_Category from "./prod_category";
+import Edit_Prod_Category from "./prod_category";
+
+import Prod_Item from "./prod_item";
+
+import Prod_Modifier from "./prod_modifier";
+
+
+import Payment_Mode from "./payment_mode";
+
 
 export {
   Navbar,
@@ -31,6 +42,16 @@ export {
   Stream,
   FAQ,
   Geography,
+  
+  Meal_Period,
+
   Prod_Category,
   Add_Prod_Category,
+  Edit_Prod_Category,
+
+  Prod_Item,
+
+  Prod_Modifier,
+  Payment_Mode,
+
 };

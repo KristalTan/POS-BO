@@ -39,14 +39,14 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const initialRows = [
-  { id: 1, category_desc: "Breakfast", is_in_use: 1, display_seq: 12 },
-  { id: 2, category_desc: "Lunch", is_in_use: 1, display_seq: 10 },
-  { id: 3, category_desc: "Dinner", is_in_use: 1, display_seq: 8 },
-  { id: 4, category_desc: "Snack", is_in_use: 0, display_seq: 5 },
-  { id: 5, category_desc: "Dessert", is_in_use: 1, display_seq: 15 },
+  { meal_period_id: 1, meal_period_desc: "Breakfast", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 12 },
+  { meal_period_id: 2, meal_period_desc: "Lunch", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 10 },
+  { meal_period_id: 3, meal_period_desc: "Dinner",start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 8 },
+  { meal_period_id: 4, meal_period_desc: "Snack", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 0, display_seq: 5 },
+  { meal_period_id: 5, meal_period_desc: "Dessert", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 15 },
 ];
 
-const Prod_Category = () => {
+const Meal_Period = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [rows, setRows] = React.useState(initialRows);
@@ -62,12 +62,12 @@ const Prod_Category = () => {
       setPage(0);
     };
 
-    const handleEdit = (id, name, status, seq) => {
-      navigate("/product-category/edit"); 
+    const handleEdit = () => {
+      navigate("/meal-period/edit"); 
     };
 
     const handleAdd = () => {
-      navigate("/product-category/add"); 
+      navigate("/meal-period/add"); 
     };
 
     const handleStatusSort = () => {
@@ -81,7 +81,7 @@ const Prod_Category = () => {
 
     return (
       <Box m="20px">
-        <Header title="Product Category" subtitle="List of product category" />
+        <Header title="Meal Period" subtitle="List of meal period" />
 
         <Box display="flex" alignItems="flex-end" justifyContent="flex-end" mb="2px">
           <IconButton onClick={handleAdd}>
@@ -94,7 +94,8 @@ const Prod_Category = () => {
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Category Name</StyledTableCell>
+                  <StyledTableCell>Meal Period Name</StyledTableCell>
+                  <StyledTableCell align="center">Period</StyledTableCell>
                   <StyledTableCell
                     align="center"
                     onClick={handleStatusSort}
@@ -112,16 +113,16 @@ const Prod_Category = () => {
               <TableBody>
                 {rows.length > 0 ? (
                   rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <StyledTableRow key={row.id}>
-                      <StyledTableCell component="th" scope="row">
-                        {row.category_desc}
-                      </StyledTableCell>
+                    <StyledTableRow key={row.meal_period_id}>
+                      <StyledTableCell component="th" scope="row">{row.meal_period_desc}</StyledTableCell>
+                      <StyledTableCell align="center">{row.start_time} - {row.end_time}</StyledTableCell>
+
                       <StyledTableCell align="center">
                         {row.is_in_use ? "Active" : "Inactive"}
                       </StyledTableCell>
                       <StyledTableCell align="center">{row.display_seq}</StyledTableCell>
                       <StyledTableCell align="center">
-                        <IconButton onClick={handleEdit(row.id, row.category_desc, row.is_in_use, row.display_seq)}>
+                        <IconButton onClick={handleEdit()}>
                           <EditOutlined style={{ color: "#272829" }} />
                         </IconButton>
                       </StyledTableCell>
@@ -152,4 +153,4 @@ const Prod_Category = () => {
     );
 };
 
-export default Prod_Category;
+export default Meal_Period;

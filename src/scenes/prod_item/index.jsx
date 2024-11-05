@@ -39,14 +39,130 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const initialRows = [
-  { id: 1, category_desc: "Breakfast", is_in_use: 1, display_seq: 12 },
-  { id: 2, category_desc: "Lunch", is_in_use: 1, display_seq: 10 },
-  { id: 3, category_desc: "Dinner", is_in_use: 1, display_seq: 8 },
-  { id: 4, category_desc: "Snack", is_in_use: 0, display_seq: 5 },
-  { id: 5, category_desc: "Dessert", is_in_use: 1, display_seq: 15 },
+{
+    product_id: 1,
+    product_desc: "Egg Sandwich",
+    product_code: "B001",
+    category_id: 1,
+    product_tag: "morning",
+    product_img_path: "/images/breakfast.png",
+    supplier_id: 201,
+    pricing_type_id: 301,
+    cost: 5.00,
+    sell_price: 10.00,
+    tax_code1: "TAX1",
+    amt_include_tax1: 1,
+    tax_code2: "TAX2",
+    amt_include_tax2: 0,
+    calc_tax2_after_tax1: 1,
+    is_in_use: 1,
+    display_seq: 12,
+    is_enable_kitchen_printer: 1,
+    is_allow_modifier: 1,
+    is_enable_track_stock: 1,
+    is_popular_item: 1,
+    meal_period: "Breakfast",
+},
+{
+    product_id: 2,
+    product_desc: "Nasi Goreng Ayam",
+    product_code: "L002",
+    category_id: 2,
+    product_tag: "afternoon",
+    product_img_path: "/images/lunch.png",
+    supplier_id: 202,
+    pricing_type_id: 302,
+    cost: 7.00,
+    sell_price: 15.00,
+    tax_code1: "TAX1",
+    amt_include_tax1: 1,
+    tax_code2: "TAX2",
+    amt_include_tax2: 0,
+    calc_tax2_after_tax1: 1,
+    is_in_use: 1,
+    display_seq: 10,
+    is_enable_kitchen_printer: 1,
+    is_allow_modifier: 1,
+    is_enable_track_stock: 1,
+    is_popular_item: 1,
+    meal_period: "Lunch",
+},
+{
+    product_id: 3,
+    product_desc: "Chicken Chop with sides",
+    product_code: "D003",
+    category_id: 3,
+    product_tag: "evening",
+    product_img_path: "/images/dinner.png",
+    supplier_id: 203,
+    pricing_type_id: 303,
+    cost: 10.00,
+    sell_price: 20.00,
+    tax_code1: "TAX1",
+    amt_include_tax1: 1,
+    tax_code2: "TAX2",
+    amt_include_tax2: 0,
+    calc_tax2_after_tax1: 1,
+    is_in_use: 1,
+    display_seq: 8,
+    is_enable_kitchen_printer: 1,
+    is_allow_modifier: 1,
+    is_enable_track_stock: 1,
+    is_popular_item: 1,
+    meal_period: "Dinner",
+},
+{
+    product_id: 4,
+    product_desc: "French Fries",
+    product_code: "S004",
+    category_id: 4,
+    product_tag: "snack",
+    product_img_path: "/images/snack.png",
+    supplier_id: 204,
+    pricing_type_id: 304,
+    cost: 3.00,
+    sell_price: 6.00,
+    tax_code1: "TAX1",
+    amt_include_tax1: 1,
+    tax_code2: "TAX2",
+    amt_include_tax2: 0,
+    calc_tax2_after_tax1: 1,
+    is_in_use: 0,
+    display_seq: 5,
+    is_enable_kitchen_printer: 0,
+    is_allow_modifier: 0,
+    is_enable_track_stock: 1,
+    is_popular_item: 0,
+    meal_period: "Snack",
+},
+{
+    product_id: 5,
+    product_desc: "Chocolate Ice Cream",
+    product_code: "DS005",
+    category_id: 5,
+    product_tag: "dessert",
+    product_img_path: "/images/dessert.png",
+    supplier_id: 205,
+    pricing_type_id: 305,
+    cost: 4.00,
+    sell_price: 8.00,
+    tax_code1: "TAX1",
+    amt_include_tax1: 1,
+    tax_code2: "TAX2",
+    amt_include_tax2: 0,
+    calc_tax2_after_tax1: 1,
+    is_in_use: 1,
+    display_seq: 15,
+    is_enable_kitchen_printer: 1,
+    is_allow_modifier: 1,
+    is_enable_track_stock: 1,
+    is_popular_item: 1,
+    meal_period: "Dessert",
+},
 ];
+  
 
-const Prod_Category = () => {
+const Prod_Item = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [rows, setRows] = React.useState(initialRows);
@@ -63,11 +179,11 @@ const Prod_Category = () => {
     };
 
     const handleEdit = (id, name, status, seq) => {
-      navigate("/product-category/edit"); 
+      navigate("/product-item/edit"); 
     };
 
     const handleAdd = () => {
-      navigate("/product-category/add"); 
+      navigate("/product-item/add"); 
     };
 
     const handleStatusSort = () => {
@@ -81,7 +197,7 @@ const Prod_Category = () => {
 
     return (
       <Box m="20px">
-        <Header title="Product Category" subtitle="List of product category" />
+        <Header title="Product Item" subtitle="List of product" />
 
         <Box display="flex" alignItems="flex-end" justifyContent="flex-end" mb="2px">
           <IconButton onClick={handleAdd}>
@@ -94,7 +210,10 @@ const Prod_Category = () => {
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Category Name</StyledTableCell>
+                  <StyledTableCell>Product Name</StyledTableCell>
+                  <StyledTableCell align="center">Sell Price (RM)</StyledTableCell>
+
+
                   <StyledTableCell
                     align="center"
                     onClick={handleStatusSort}
@@ -114,8 +233,10 @@ const Prod_Category = () => {
                   rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
                     <StyledTableRow key={row.id}>
                       <StyledTableCell component="th" scope="row">
-                        {row.category_desc}
+                        {row.product_code} - {row.product_desc}
                       </StyledTableCell>
+                      <StyledTableCell align="center">{row.sell_price.toFixed(2)}</StyledTableCell>
+
                       <StyledTableCell align="center">
                         {row.is_in_use ? "Active" : "Inactive"}
                       </StyledTableCell>
@@ -152,4 +273,4 @@ const Prod_Category = () => {
     );
 };
 
-export default Prod_Category;
+export default Prod_Item;

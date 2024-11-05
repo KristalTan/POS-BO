@@ -4,22 +4,22 @@ import { useContext, useState } from "react";
 import { tokens } from "../../../theme";
 import { Menu, MenuItem, Sidebar } from "react-pro-sidebar";
 import {
-  BarChartOutlined,
-  CalendarTodayOutlined,
-  ContactsOutlined,
+  FlatwareOutlined,
+  BorderColorOutlined,
   DashboardOutlined,
-  DonutLargeOutlined,
-  HelpOutlineOutlined,
-  MapOutlined,
-  MenuOutlined,
-  PeopleAltOutlined,
-  PersonOutlined,
+  ScheduleOutlined,
+  PercentOutlined,
+  AddCardOutlined,
+  ReceiptLongOutlined,
+  CategoryOutlined,
+  TableChartOutlined,
   ReceiptOutlined,
-  TimelineOutlined,
-  WavesOutlined,
+  TableBarOutlined,
+  AddBusinessOutlined,
 } from "@mui/icons-material";
 import logo from "../../../assets/images/backend (2).png";
 import Item from "./Item";
+// import Dropdown from "./Dropdown";
 import { ToggledContext } from "../../../App";
 
 const SideBar = () => {
@@ -103,23 +103,30 @@ const SideBar = () => {
          
         >
           <Item
+            title="Meal Period"
+            path="/meal-period"
+            colors={colors}
+            icon={<ScheduleOutlined />}
+          />
+          <Item
             title="Product Category"
             path="/product-category"
             colors={colors}
-            icon={<PeopleAltOutlined />}
+            icon={<CategoryOutlined />}
           />
           <Item
             title="Product Item "
-            path="/contacts"
+            path="/product-item"
             colors={colors}
-            icon={<ContactsOutlined />}
+            icon={<FlatwareOutlined />}
           />
           <Item
             title="Product Modifier"
-            path="/invoices"
+            path="/product-modifier"
             colors={colors}
-            icon={<ReceiptOutlined />}
+            icon={<BorderColorOutlined />}
           />
+          
         </Menu>
         <Typography
           variant="h6"
@@ -127,27 +134,27 @@ const SideBar = () => {
           color={"#F1F6F9"}
           sx={{ m: "15px 0 5px 20px" }}
         >
-          STORE SETTINGS
+          PAYMENT SETTINGS
         </Typography>
         <Menu
         >
           <Item
-            title="Profile Form"
-            path="/form"
+            title="Payment Mode"
+            path="/payment_mode"
             colors={colors}
-            icon={<PersonOutlined />}
+            icon={<AddCardOutlined />}
           />
           <Item
-            title="Calendar"
+            title="Tax"
             path="/calendar"
             colors={colors}
-            icon={<CalendarTodayOutlined />}
+            icon={<PercentOutlined />}
           />
           <Item
-            title="FAQ Page"
+            title="Receipt Template"
             path="/faq"
             colors={colors}
-            icon={<HelpOutlineOutlined />}
+            icon={<ReceiptLongOutlined />}
           />
         </Menu>
         <Typography
@@ -157,40 +164,29 @@ const SideBar = () => {
           fontStyle="underline"
           sx={{ m: "15px 0 5px 20px" }}
         >
-          PAYMENT SETTINGS
+          STORE SETTINGS
         </Typography>
         <Menu
         >
           <Item
-            title="Bar Chart"
-            path="/bar"
-            colors={colors}
-            icon={<BarChartOutlined />}
-          />
-          <Item
-            title="Pie Chart"
-            path="/pie"
-            colors={colors}
-            icon={<DonutLargeOutlined />}
-          />
-          <Item
-            title="Line Chart"
+            title="Store"
             path="/line"
             colors={colors}
-            icon={<TimelineOutlined />}
+            icon={<AddBusinessOutlined />}
           />
           <Item
-            title="Geography Chart"
-            path="/geography"
+            title="Table Section"
+            path="/bar"
             colors={colors}
-            icon={<MapOutlined />}
+            icon={<TableChartOutlined />}
           />
           <Item
-            title="Stream Chart"
-            path="/stream"
+            title="Table Location"
+            path="/pie"
             colors={colors}
-            icon={<WavesOutlined />}
+            icon={<TableBarOutlined />}
           />
+         
         </Menu>
       </Box>
     </Sidebar>

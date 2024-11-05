@@ -14,13 +14,19 @@ import {
   Geography,
   Calendar,
   Stream,
+
+  Meal_Period,
+
   Prod_Category,
-  Add_Prod_Category
+  Add_Prod_Category,
+  Edit_Prod_Category,
+
+  Prod_Item,
+
+  Prod_Modifier,
+  Payment_Mode,
 } from "./scenes";
 
-// import{
-//   Add_Prod_Category,
-// } from "./scenes/prod_category"
 
 const AppRouter = () => {
   return (
@@ -39,8 +45,21 @@ const AppRouter = () => {
           <Route path="/line" element={<Line />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/geography" element={<Geography />} />
+          {/* Product Settings */}
+          <Route path="/meal-period" element={<Meal_Period />} />
+ 
+
           <Route path="/product-category" element={<Prod_Category />} />
           <Route path="/product-category/add" element={<Add_Prod_Category />} />
+          <Route path="/product-category/edit" element={<Edit_Prod_Category />} /> 
+
+          <Route path="/product-item" element={<Prod_Item />} />
+
+          <Route path="/product-modifier" element={<Prod_Modifier />} />
+
+          {/* Payment Settings */}
+          <Route path="/payment_mode" element={<Payment_Mode />} />
+
 
         </Route>
       </Routes>
