@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { useTheme } from "@emotion/react";
 import { tokens } from "../theme";
 import {

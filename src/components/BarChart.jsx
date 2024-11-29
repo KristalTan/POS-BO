@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import { ResponsiveBar } from "@nivo/bar";
 import { mockBarData as data } from "../data/mockData";
 import { tokens } from "../theme";

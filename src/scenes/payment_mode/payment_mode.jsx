@@ -36,11 +36,10 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
   }));
   
   const rows = [
-    { id: 1, category_desc: "Breakfast", is_in_use: 1, display_seq: 12 },
-    { id: 2, category_desc: "Lunch", is_in_use: 1, display_seq: 10 },
-    { id: 3, category_desc: "Dinner", is_in_use: 1, display_seq: 8 },
-    { id: 4, category_desc: "Snack", is_in_use: 0, display_seq: 5 },
-    { id: 5, category_desc: "Dessert", is_in_use: 1, display_seq: 15 },
+    { pymt_mode_id: 1, pymt_mode_desc: "Bank Transfer", pymt_type: 1, for_store:"", is_in_use:1 },
+    { pymt_mode_id: 2, pymt_mode_desc: "Credit card", pymt_type: 1, for_store:"", is_in_use: 1 },
+    { pymt_mode_id: 3, pymt_mode_desc: "QR Pay", pymt_type: 1, for_store:"", is_in_use: 1 },
+    { pymt_mode_id: 4, pymt_mode_desc: "E-wallet", pymt_type: 1, for_store:"", is_in_use: 0 },
   ];
   
   const Payment_Mode = () => {
@@ -57,12 +56,14 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
       setPage(0);
     };
   
-    const handleEdit = (id) => {
-      console.log("Edit item with id:", id);
+    const handleEdit = (pymt_mode_id) => {
+      const selectedRow = rows.find(row => row.pymt_mode_id === pymt_mode_id);
+      navigate("/payment-mode/edit", { state: { response: selectedRow } }); 
     };
+    
   
     const handleAdd = () => {
-      navigate("/product-category/add"); 
+      navigate("/payment-mode/add"); 
     };
   
     return (
@@ -76,33 +77,39 @@ const StyledTableCell = styled(TableCell)(({ theme }) => ({
         </Box>
   
         <Box>
-          <TableContainer component={Paper}>
+          <TableContainer >
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Category Name</StyledTableCell>
-                  <StyledTableCell align="center">Status</StyledTableCell>
-                  <StyledTableCell align="center">Display Sequence</StyledTableCell>
-                  <StyledTableCell align="center">Action</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }} >Payment Name</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Status</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                  <StyledTableRow key={row.id}>
-                    <StyledTableCell component="th" scope="row">
-                      {row.category_desc}
+              {rows.length > 0 ? (
+                rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                  <StyledTableRow key={row.pymt_mode_id}>
+                    <StyledTableCell sx={{ py: 1 }}  component="th" scope="row">
+                      {row.pymt_mode_desc}
                     </StyledTableCell>
-                    <StyledTableCell align="center">
+                    <StyledTableCell sx={{ py: 1 }}  align="center">
                       {row.is_in_use ? "Active" : "Inactive"}
                     </StyledTableCell>
-                    <StyledTableCell align="center">{row.display_seq}</StyledTableCell>
-                    <StyledTableCell align="center">
-                      <IconButton onClick={() => handleEdit(row.id)}>
-                        <EditOutlined style={{ color: "#272829" }} />
+                    <StyledTableCell sx={{ py: 1 }}  align="center">
+                    <IconButton onClick={() => handleEdit(row.pymt_mode_id)}>
+                    <EditOutlined style={{ color: "#272829" }} />
                       </IconButton>
                     </StyledTableCell>
                   </StyledTableRow>
-                ))}
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={4} align="center">
+                    No record found
+                  </TableCell>
+                </TableRow>
+              )}
               </TableBody>
             </Table>
           </TableContainer>

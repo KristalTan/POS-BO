@@ -39,14 +39,12 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const initialRows = [
-  { id: 1, category_desc: "Breakfast", is_in_use: 1, display_seq: 12 },
-  { id: 2, category_desc: "Lunch", is_in_use: 1, display_seq: 10 },
-  { id: 3, category_desc: "Dinner", is_in_use: 1, display_seq: 8 },
-  { id: 4, category_desc: "Snack", is_in_use: 0, display_seq: 5 },
-  { id: 5, category_desc: "Dessert", is_in_use: 1, display_seq: 15 },
-];
+  { pos_station_id: 1, pos_station_desc: "Kitchen", ip:"", default_printer_id:1, is_in_use: 1, display_seq: 12 },
+  { pos_station_id: 2, pos_station_desc: "Cashier 1", ip:"", default_printer_id:1, is_in_use: 1, display_seq: 10 },
+  { pos_station_id: 3, pos_station_desc: "Cashier 2",ip:"", default_printer_id:1, is_in_use: 1, display_seq: 8 },
+  ];
 
-const Prod_Category = () => {
+const Station = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [rows, setRows] = React.useState(initialRows);
@@ -62,12 +60,14 @@ const Prod_Category = () => {
       setPage(0);
     };
 
-    const handleEdit = (id, name, status, seq) => {
-      navigate("/product-category/edit"); 
+    const handleEdit = (pos_station_id) => {
+      const selectedRow = rows.find(row => row.pos_station_id === pos_station_id);
+      navigate("/station/edit", { state: { response: selectedRow } }); 
     };
+    
 
     const handleAdd = () => {
-      navigate("/product-category/add"); 
+      navigate("/station/add"); 
     };
 
     const handleStatusSort = () => {
@@ -81,7 +81,7 @@ const Prod_Category = () => {
 
     return (
       <Box m="20px">
-        <Header title="Product Category" subtitle="List of product category" />
+        <Header title="POS Station" />
 
         <Box display="flex" alignItems="flex-end" justifyContent="flex-end" mb="2px">
           <IconButton onClick={handleAdd}>
@@ -90,12 +90,12 @@ const Prod_Category = () => {
         </Box>
 
         <Box>
-          <TableContainer component={Paper}>
+          <TableContainer >
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Category Name</StyledTableCell>
-                  <StyledTableCell
+                  <StyledTableCell sx={{ py: 1 }} >POS Station Name</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }} 
                     align="center"
                     onClick={handleStatusSort}
                     style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -105,23 +105,21 @@ const Prod_Category = () => {
                       {statusSortAsc ? <ArrowDropUp fontSize="small" /> : <ArrowDropDown fontSize="small" />}
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align="center">Display Sequence</StyledTableCell>
-                  <StyledTableCell align="center">Action</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Display Sequence</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.length > 0 ? (
                   rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <StyledTableRow key={row.id}>
-                      <StyledTableCell component="th" scope="row">
-                        {row.category_desc}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">
+                    <StyledTableRow key={row.pos_station_id}>
+                      <StyledTableCell sx={{ py: 1 }}  component="th" scope="row">{row.pos_station_desc}</StyledTableCell>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">
                         {row.is_in_use ? "Active" : "Inactive"}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{row.display_seq}</StyledTableCell>
-                      <StyledTableCell align="center">
-                        <IconButton onClick={handleEdit(row.id, row.category_desc, row.is_in_use, row.display_seq)}>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">{row.display_seq}</StyledTableCell>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">
+                        <IconButton onClick={() => handleEdit(row.pos_station_id)}>
                           <EditOutlined style={{ color: "#272829" }} />
                         </IconButton>
                       </StyledTableCell>
@@ -152,4 +150,4 @@ const Prod_Category = () => {
     );
 };
 
-export default Prod_Category;
+export default Station;

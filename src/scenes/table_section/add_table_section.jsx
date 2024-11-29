@@ -1,48 +1,74 @@
-import { Box, Button, TextField, useMediaQuery, IconButton, Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
+import { Box, Button, TextField, IconButton, Checkbox, FormControlLabel, FormLabel, Radio, RadioGroup, Typography } from "@mui/material";
 import { Header } from "../../components";
 import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { ChevronLeftOutlined } from '@mui/icons-material';
 
-
 const initialValues = {
-    category_desc: "",
+    table_section_name: "",
+    is_in_use: 1,  // Default to "Active"
     display_seq: "",
-    is_in_use: 1,  // Default to "active"
 };
 
+
 const checkoutSchema = yup.object().shape({
-    category_desc: yup.string().required("Category Name is required"),
-    is_in_use: yup.string().required("Status is required"),
-    display_seq: yup
-        .number()
-        .typeError("Display Sequence must be a number"),
+    table_section_name: yup.string().required("Table Section Name is required"),
+    is_in_use: yup.number().required("Status is required"),
 });
 
-const Add_Prod_Category = () => {
+const Add_Table_Section = () => {
     const navigate = useNavigate();
     const prevPage = () => {
-        navigate("/product-category");
+        navigate("/table-sec");
     };
 
-    //
+    // const handleFormSubmit = (values, actions) => {
+    //     // Make the POST request to the backend
+    //     fetch('http://your-backend-url/api/data', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(values), // Send the form values
+    //     })
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to submit form');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             console.log('Success:', data);
+    //             actions.resetForm(); // Reset the form if needed
+    //             navigate("/meal-period"); // Redirect after successful submission
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error:', error);
+    //             // Handle error appropriately (e.g., show error message)
+    //         });
+    // };
+
     const handleFormSubmit = (values, actions) => {
         console.log('body', JSON.stringify(values, null, 2));
 
         /*
 
-            body {
-                "category_desc": "Breakfast",
-                "display_seq": "1",
-                "is_in_use": 1
-                }
+            body: {
+                "meal_period_desc": "Lunch",
+                "start_time": "15:24",
+                "end_time": "20:24",
+                "is_in_use": 1,
+                "display_seq": "q122"
+            }
 
         */
     
         actions.resetForm();
-        navigate("/product-category");
+        navigate("/table-sec"); 
     };
+    
+    
 
     return (
         <Box m="20px">
@@ -51,7 +77,7 @@ const Add_Prod_Category = () => {
                     <ChevronLeftOutlined style={{ color: "#272829", fontSize: "38px" }} />
                 </IconButton>
                 <Box ml={1}>
-                    <Header title="New Product Category" />
+                    <Header title="New Table Section" />
                 </Box>
             </Box>
             <Box
@@ -73,46 +99,31 @@ const Add_Prod_Category = () => {
                         handleBlur,
                         handleChange,
                         handleSubmit,
+                        setFieldValue,
                     }) => (
                         <form onSubmit={handleSubmit}>
                             <Box display="grid" justifyContent="flex-end" gap="20px" gridTemplateColumns="0.5fr 3fr">
                                 
-                                {/* Category Name */}
-                                <FormLabel sx={{ alignSelf: "center",fontWeight:"bold" }}>Category Name: </FormLabel>
+                                <FormLabel sx={{ alignSelf: "center", fontWeight: "bold" }}>Table Section Name: </FormLabel>
                                 <TextField
                                     fullWidth
                                     variant="filled"
                                     type="text"
-                                    label="Eg: Breakfast"
+                                    label="Eg: Zone X"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.category_desc}
-                                    name="category_desc"
-                                    error={touched.category_desc && Boolean(errors.category_desc)}
-                                    helperText={touched.category_desc && errors.category_desc}
+                                    value={values.table_section_name}
+                                    name="table_section_name"
+                                    error={touched.table_section_name && Boolean(errors.table_section_name)}
+                                    helperText={touched.table_section_name && errors.table_section_name}
                                 />
 
-                                {/* Display Sequence */}
-                                <FormLabel sx={{ alignSelf: "center",fontWeight:"bold"}}>Display Sequence: </FormLabel>
-                                <TextField
-                                    fullWidth
-                                    variant="filled"
-                                    type="text"
-                                    label="Eg: 1"
-                                    onBlur={handleBlur}
-                                    onChange={handleChange}
-                                    value={values.display_seq}
-                                    name="display_seq"
-                                    error={touched.display_seq && Boolean(errors.display_seq)}
-                                    helperText={touched.display_seq && errors.display_seq}
-                                />
-
-                                <FormLabel sx={{ alignSelf: "center", fontWeight:"bold" }}>Status: </FormLabel>
+                                <FormLabel sx={{ alignSelf: "center", fontWeight: "bold" }}>Status: </FormLabel>
                                 <RadioGroup
                                     row
                                     name="is_in_use"
                                     value={values.is_in_use}
-                                    onChange={handleChange}
+                                    onChange={(e) => setFieldValue("is_in_use", Number(e.target.value))}
                                 >
                                     <FormControlLabel
                                         value={1}
@@ -125,6 +136,20 @@ const Add_Prod_Category = () => {
                                         label="Inactive"
                                     />
                                 </RadioGroup>
+
+                                <FormLabel sx={{ alignSelf: "center", fontWeight: "bold" }}>Display Sequence: </FormLabel>
+                                <TextField
+                                    fullWidth
+                                    variant="filled"
+                                    type="text"
+                                    label="Eg: 1"
+                                    onBlur={handleBlur}
+                                    onChange={handleChange}
+                                    value={values.display_seq}
+                                    name="display_seq"
+                                    error={touched.display_seq && Boolean(errors.display_seq)}
+                                    helperText={touched.display_seq && errors.display_seq}
+                                />
                             </Box>
 
                             <Box display="flex" justifyContent="flex-end" mt="20px">
@@ -133,12 +158,13 @@ const Add_Prod_Category = () => {
                                     color="secondary"
                                     variant="contained"
                                     fontWeight="bold"
-                                    sx={{ backgroundColor: "#FFB000",
+                                    sx={{
+                                        backgroundColor: "#FFB000",
                                         ":hover": {
                                             color: "black",
                                             backgroundColor: "#F5F5F5",
-                                          },
-                                     }}
+                                        },
+                                    }}
                                 >
                                     CREATE
                                 </Button>
@@ -151,4 +177,4 @@ const Add_Prod_Category = () => {
     );
 };
 
-export default Add_Prod_Category;
+export default Add_Table_Section;

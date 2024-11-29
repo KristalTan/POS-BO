@@ -39,14 +39,13 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const initialRows = [
-  { meal_period_id: 1, meal_period_desc: "Breakfast", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 12 },
-  { meal_period_id: 2, meal_period_desc: "Lunch", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 10 },
-  { meal_period_id: 3, meal_period_desc: "Dinner",start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 8 },
-  { meal_period_id: 4, meal_period_desc: "Snack", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 0, display_seq: 5 },
-  { meal_period_id: 5, meal_period_desc: "Dessert", start_time:"07:00:00", end_time:"11:59:59", is_in_use: 1, display_seq: 15 },
+  { tax_id: 1, tax_code: "SST", tax_desc: "Sales and Service Tax", tax_pct: 12, is_in_use: 1, display_seq: 12 },
+  { tax_id: 2, tax_code: "GST", tax_desc: "Goods and Service Tax", tax_pct: 2, is_in_use: 1, display_seq: 10 },
+  { tax_id: 3, tax_code: "Service charge", tax_desc: "Sales and Service Tax", tax_pct: 32, is_in_use: 1, display_seq: 8 },
+
 ];
 
-const Meal_Period = () => {
+const Tax = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [rows, setRows] = React.useState(initialRows);
@@ -62,12 +61,14 @@ const Meal_Period = () => {
       setPage(0);
     };
 
-    const handleEdit = () => {
-      navigate("/meal-period/edit"); 
+    const handleEdit = (tax_id) => {
+      const selectedRow = rows.find(row => row.tax_id === tax_id);
+      navigate("/tax/edit", { state: { response: selectedRow } }); 
     };
+    
 
     const handleAdd = () => {
-      navigate("/meal-period/add"); 
+      navigate("/tax/add"); 
     };
 
     const handleStatusSort = () => {
@@ -81,7 +82,7 @@ const Meal_Period = () => {
 
     return (
       <Box m="20px">
-        <Header title="Meal Period" subtitle="List of meal period" />
+        <Header title="Tax" subtitle="List of tax and service charge" />
 
         <Box display="flex" alignItems="flex-end" justifyContent="flex-end" mb="2px">
           <IconButton onClick={handleAdd}>
@@ -90,13 +91,14 @@ const Meal_Period = () => {
         </Box>
 
         <Box>
-          <TableContainer component={Paper}>
+          <TableContainer >
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Meal Period Name</StyledTableCell>
-                  <StyledTableCell align="center">Period</StyledTableCell>
-                  <StyledTableCell
+                  <StyledTableCell sx={{ py: 1 }} >Tax Name</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Tax Percentage</StyledTableCell>
+
+                  <StyledTableCell sx={{ py: 1 }} 
                     align="center"
                     onClick={handleStatusSort}
                     style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -106,24 +108,24 @@ const Meal_Period = () => {
                       {statusSortAsc ? <ArrowDropUp fontSize="small" /> : <ArrowDropDown fontSize="small" />}
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align="center">Display Sequence</StyledTableCell>
-                  <StyledTableCell align="center">Action</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Display Sequence</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.length > 0 ? (
                   rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <StyledTableRow key={row.meal_period_id}>
-                      <StyledTableCell component="th" scope="row">{row.meal_period_desc}</StyledTableCell>
-                      <StyledTableCell align="center">{row.start_time} - {row.end_time}</StyledTableCell>
+                    <StyledTableRow key={row.tax_id}>
+                      <StyledTableCell sx={{ py: 1 }}  component="th" scope="row">{row.tax_code} - {row.tax_desc}</StyledTableCell>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">{row.tax_pct}%</StyledTableCell>
 
-                      <StyledTableCell align="center">
+                      <StyledTableCell sx={{ py: 1 }}  align="center">
                         {row.is_in_use ? "Active" : "Inactive"}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{row.display_seq}</StyledTableCell>
-                      <StyledTableCell align="center">
-                        <IconButton onClick={handleEdit()}>
-                          <EditOutlined style={{ color: "#272829" }} />
+                      <StyledTableCell sx={{ py: 1 }}  align="center">{row.display_seq}</StyledTableCell>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">
+                      <IconButton onClick={() => handleEdit(row.tax_id)}>
+                      <EditOutlined style={{ color: "#272829" }} />
                         </IconButton>
                       </StyledTableCell>
                     </StyledTableRow>
@@ -153,4 +155,4 @@ const Meal_Period = () => {
     );
 };
 
-export default Meal_Period;
+export default Tax;

@@ -36,7 +36,7 @@ function Dashboard() {
         <Header title="DASHBOARD" subtitle="Welcome to your dashboard" />
         {!isXsDevices && (
           <Box>
-            <Button
+            {/* <Button
               variant="contained"
               sx={{
                 bgcolor: colors.blueAccent[700],
@@ -53,7 +53,7 @@ function Dashboard() {
               startIcon={<DownloadOutlined />}
             >
               DOWNLOAD REPORTS
-            </Button>
+            </Button> */}
           </Box>
         )}
       </Box>

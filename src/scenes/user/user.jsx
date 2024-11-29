@@ -13,6 +13,7 @@ import Paper from '@mui/material/Paper';
 import { AddCircle, EditOutlined, ArrowDropUp, ArrowDropDown } from "@mui/icons-material";
 import IconButton from '@mui/material/IconButton';
 
+
 const StyledTableCell = styled(TableCell)(({ theme }) => ({
     [`&.${tableCellClasses.head}`]: {
       backgroundColor: "#FFB000",
@@ -39,135 +40,35 @@ const StyledTableRow = styled(TableRow)(({ theme }) => ({
 }));
 
 const initialRows = [
-{
-    product_id: 1,
-    product_desc: "Egg Sandwich",
-    product_code: "B001",
-    category_id: 1,
-    product_tag: "morning",
-    product_img_path: "/images/breakfast.png",
-    supplier_id: 201,
-    pricing_type_id: 301,
-    cost: 5.00,
-    sell_price: 10.00,
-    tax_code1: "TAX1",
-    amt_include_tax1: 1,
-    tax_code2: "TAX2",
-    amt_include_tax2: 0,
-    calc_tax2_after_tax1: 1,
-    is_in_use: 1,
-    display_seq: 12,
-    is_enable_kitchen_printer: 1,
-    is_allow_modifier: 1,
-    is_enable_track_stock: 1,
-    is_popular_item: 1,
-    meal_period: "Breakfast",
-},
-{
-    product_id: 2,
-    product_desc: "Nasi Goreng Ayam",
-    product_code: "L002",
-    category_id: 2,
-    product_tag: "afternoon",
-    product_img_path: "/images/lunch.png",
-    supplier_id: 202,
-    pricing_type_id: 302,
-    cost: 7.00,
-    sell_price: 15.00,
-    tax_code1: "TAX1",
-    amt_include_tax1: 1,
-    tax_code2: "TAX2",
-    amt_include_tax2: 0,
-    calc_tax2_after_tax1: 1,
-    is_in_use: 1,
-    display_seq: 10,
-    is_enable_kitchen_printer: 1,
-    is_allow_modifier: 1,
-    is_enable_track_stock: 1,
-    is_popular_item: 1,
-    meal_period: "Lunch",
-},
-{
-    product_id: 3,
-    product_desc: "Chicken Chop with sides",
-    product_code: "D003",
-    category_id: 3,
-    product_tag: "evening",
-    product_img_path: "/images/dinner.png",
-    supplier_id: 203,
-    pricing_type_id: 303,
-    cost: 10.00,
-    sell_price: 20.00,
-    tax_code1: "TAX1",
-    amt_include_tax1: 1,
-    tax_code2: "TAX2",
-    amt_include_tax2: 0,
-    calc_tax2_after_tax1: 1,
-    is_in_use: 1,
-    display_seq: 8,
-    is_enable_kitchen_printer: 1,
-    is_allow_modifier: 1,
-    is_enable_track_stock: 1,
-    is_popular_item: 1,
-    meal_period: "Dinner",
-},
-{
-    product_id: 4,
-    product_desc: "French Fries",
-    product_code: "S004",
-    category_id: 4,
-    product_tag: "snack",
-    product_img_path: "/images/snack.png",
-    supplier_id: 204,
-    pricing_type_id: 304,
-    cost: 3.00,
-    sell_price: 6.00,
-    tax_code1: "TAX1",
-    amt_include_tax1: 1,
-    tax_code2: "TAX2",
-    amt_include_tax2: 0,
-    calc_tax2_after_tax1: 1,
-    is_in_use: 0,
-    display_seq: 5,
-    is_enable_kitchen_printer: 0,
-    is_allow_modifier: 0,
-    is_enable_track_stock: 1,
-    is_popular_item: 0,
-    meal_period: "Snack",
-},
-{
-    product_id: 5,
-    product_desc: "Chocolate Ice Cream",
-    product_code: "DS005",
-    category_id: 5,
-    product_tag: "dessert",
-    product_img_path: "/images/dessert.png",
-    supplier_id: 205,
-    pricing_type_id: 305,
-    cost: 4.00,
-    sell_price: 8.00,
-    tax_code1: "TAX1",
-    amt_include_tax1: 1,
-    tax_code2: "TAX2",
-    amt_include_tax2: 0,
-    calc_tax2_after_tax1: 1,
-    is_in_use: 1,
-    display_seq: 15,
-    is_enable_kitchen_printer: 1,
-    is_allow_modifier: 1,
-    is_enable_track_stock: 1,
-    is_popular_item: 1,
-    meal_period: "Dessert",
-},
+  { user_id: 1, login_id: "a", user_name:"a", email:"a@abc.com", pwd: "", user_group_id: 1, is_active: 1 },
+  { user_id: 2, login_id: "b", user_name:"b", email:"b@abc.com", pwd: "", user_group_id: 2 ,is_active: 1 },
+  { user_id: 3, login_id: "c",user_name:"c", email:"c@abc.com", pwd: "", user_group_id: 3 ,is_active: 1 },
+  { user_id: 4, login_id: "d", user_name:"d", email:"d@abc.com", pwd: "", user_group_id: 5 ,is_active: 1 },
+  { user_id: 5, login_id: "e", user_name:"e", email:"e@abc.com", pwd: "", user_group_id: 4 ,is_active: 0 },
 ];
+
+const user_group = [
+    { user_group_id: 1, user_group_desc: "Manager", is_in_use: 1, display_seq: 12, actions: [1, 2, 3] },
+    { user_group_id: 2, user_group_desc: "CEO", is_in_use: 1, display_seq: 10, actions: [2, 4, 5] },
+    { user_group_id: 3, user_group_desc: "Supervisor", is_in_use: 1, display_seq: 8, actions: [1, 3, 5] },
+    { user_group_id: 4, user_group_desc: "Cashier", is_in_use: 0, display_seq: 5, actions: [3, 4] },
+    { user_group_id: 5, user_group_desc: "Waiter", is_in_use: 1, display_seq: 15, actions: [2, 5] },
+  ];
   
 
-const Prod_Item = () => {
+const User = () => {
     const [page, setPage] = React.useState(0);
     const [rowsPerPage, setRowsPerPage] = React.useState(5);
     const [rows, setRows] = React.useState(initialRows);
     const [statusSortAsc, setStatusSortAsc] = React.useState(true);
     const navigate = useNavigate(); 
+
+    const groupMap = React.useMemo(() => {
+        return user_group.reduce((map, user_group) => {
+            map[user_group.user_group_id] = user_group.user_group_desc;
+            return map;
+        }, {});
+    }, []);
 
     const handleChangePage = (event, newPage) => {
       setPage(newPage);
@@ -178,12 +79,14 @@ const Prod_Item = () => {
       setPage(0);
     };
 
-    const handleEdit = (id, name, status, seq) => {
-      navigate("/product-item/edit"); 
+    const handleEdit = (user_id) => {
+      const selectedRow = rows.find(row => row.user_id === user_id);
+      navigate("/user/edit", { state: { response: selectedRow } }); 
     };
+    
 
     const handleAdd = () => {
-      navigate("/product-item/add"); 
+      navigate("/user/add"); 
     };
 
     const handleStatusSort = () => {
@@ -197,7 +100,7 @@ const Prod_Item = () => {
 
     return (
       <Box m="20px">
-        <Header title="Product Item" subtitle="List of product" />
+        <Header title="User" subtitle="List of users" />
 
         <Box display="flex" alignItems="flex-end" justifyContent="flex-end" mb="2px">
           <IconButton onClick={handleAdd}>
@@ -206,15 +109,15 @@ const Prod_Item = () => {
         </Box>
 
         <Box>
-          <TableContainer component={Paper}>
+          <TableContainer >
             <Table sx={{ minWidth: 700 }}>
               <TableHead>
                 <TableRow>
-                  <StyledTableCell>Product Name</StyledTableCell>
-                  <StyledTableCell align="center">Sell Price (RM)</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }} >Username</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Email</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">User Group</StyledTableCell>
 
-
-                  <StyledTableCell
+                  <StyledTableCell sx={{ py: 1 }} 
                     align="center"
                     onClick={handleStatusSort}
                     style={{ cursor: "pointer", display: "flex", alignItems: "center", justifyContent: "center" }}
@@ -224,25 +127,22 @@ const Prod_Item = () => {
                       {statusSortAsc ? <ArrowDropUp fontSize="small" /> : <ArrowDropDown fontSize="small" />}
                     </span>
                   </StyledTableCell>
-                  <StyledTableCell align="center">Display Sequence</StyledTableCell>
-                  <StyledTableCell align="center">Action</StyledTableCell>
+                  <StyledTableCell sx={{ py: 1 }}  align="center">Action</StyledTableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
                 {rows.length > 0 ? (
                   rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                    <StyledTableRow key={row.id}>
-                      <StyledTableCell component="th" scope="row">
-                        {row.product_code} - {row.product_desc}
-                      </StyledTableCell>
-                      <StyledTableCell align="center">{row.sell_price.toFixed(2)}</StyledTableCell>
+                    <StyledTableRow key={row.user_id}>
+                      <StyledTableCell sx={{ py: 1 }}  component="th" scope="row">{row.user_name}</StyledTableCell>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">{row.email}</StyledTableCell>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">{groupMap[row.user_group_id] || ""}</StyledTableCell>
 
-                      <StyledTableCell align="center">
-                        {row.is_in_use ? "Active" : "Inactive"}
+                      <StyledTableCell sx={{ py: 1 }}  align="center">
+                        {row.is_active ? "Active" : "Inactive"}
                       </StyledTableCell>
-                      <StyledTableCell align="center">{row.display_seq}</StyledTableCell>
-                      <StyledTableCell align="center">
-                        <IconButton onClick={handleEdit(row.id, row.category_desc, row.is_in_use, row.display_seq)}>
+                      <StyledTableCell sx={{ py: 1 }}  align="center">
+                        <IconButton onClick={() => handleEdit(row.user_id)}>
                           <EditOutlined style={{ color: "#272829" }} />
                         </IconButton>
                       </StyledTableCell>
@@ -273,4 +173,4 @@ const Prod_Item = () => {
     );
 };
 
-export default Prod_Item;
+export default User;

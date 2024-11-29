@@ -1,74 +1,58 @@
-import { Box, Button, TextField, useMediaQuery, IconButton, Radio, RadioGroup, FormControlLabel, FormLabel } from "@mui/material";
+import { Box, Button, TextField, IconButton, FormControlLabel, FormLabel, Radio, RadioGroup, Select, MenuItem } from "@mui/material";
 import { Header } from "../../components";
 import { Formik } from "formik";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { ChevronLeftOutlined } from '@mui/icons-material';
 
+const initialValues = {
+    pymt_mode_desc: "",
+    pymt_type: 0,
+    for_store: "",
+    is_in_use: 1,  // Default to "Active"
+};
+
+const pymt_type = [
+    { id: 1, pymt_type_desc: "Cash"},
+    { id: 2, pymt_type_desc: "Bank Transfer"},
+    { id: 3, pymt_type_desc: "Visa Card"},
+    { id: 4, pymt_type_desc: "MasterCard"},
+  ];
+
+const rows = [
+    { pymt_mode_id: 1, pymt_mode_desc: "Bank Transfer", pymt_type: 1, for_store:"", is_in_use:1 },
+    { pymt_mode_id: 2, pymt_mode_desc: "Credit card", pymt_type: 1, for_store:"", is_in_use: 1 },
+    { pymt_mode_id: 3, pymt_mode_desc: "QR Pay", pymt_type: 1, for_store:"", is_in_use: 1 },
+    { pymt_mode_id: 4, pymt_mode_desc: "E-wallet", pymt_type: 1, for_store:"", is_in_use: 0 },
+  ];
 
 const checkoutSchema = yup.object().shape({
-    category_desc: yup.string().required("Category Name is required"),
-    is_in_use: yup.number().required("is_in_use is required"),
+    pymt_mode_desc: yup.string().required("Payment Mode Name is required"),
+    is_in_use: yup.number().required("Status is required"),
+    pymt_type: yup.number().required("Payment Type is required"),
     
 });
 
-const Edit_Prod_Category = () => {
+const Add_Payment_Mode = () => {
     const navigate = useNavigate();
-    const location = useLocation();
-    const response = location.state?.response;
     const prevPage = () => {
-        navigate("/product-category");
+        navigate("/payment-mode");
     };
-
-    const initialValues = {
-        category_desc:response?.category_desc || "",
-        display_seq:response?.display_seq || "",
-        is_in_use:response?.is_in_use ||  1,  // Default to "active"
-    };
-
-        // const handleFormSubmit = (values, actions) => {
-        //     // Make the POST request to the backend
-        //     fetch('http://your-backend-url/api/data', {
-        //         method: 'POST',
-        //         headers: {
-        //             'Content-Type': 'application/json',
-        //         },
-        //         body: JSON.stringify(values), // Send the form values
-        //     })
-        //         .then((response) => {
-        //             if (!response.ok) {
-        //                 throw new Error('Failed to submit form');
-        //             }
-        //             return response.json();
-        //         })
-        //         .then((data) => {
-        //             console.log('Success:', data);
-        //             actions.resetForm(); // Reset the form if needed
-        //             navigate("/meal-period"); // Redirect after successful submission
-        //         })
-        //         .catch((error) => {
-        //             console.error('Error:', error);
-        //             // Handle error appropriately (e.g., show error message)
-        //         });
-        // };
 
     const handleFormSubmit = (values, actions) => {
         console.log('body', JSON.stringify(values, null, 2));
 
-        /*
-
-            body {
-                "category_desc": "Breakfast",
-                "display_seq": 12,
-                "is_in_use": 1
-                }
-
-        */
+        // body {
+        //     "pymt_mode_desc": "f",
+        //     "pymt_type": 1,
+        //     "for_store": "",
+        //     "is_in_use": 0
+        //   }
     
         actions.resetForm();
-        navigate("/product-category");
+        navigate("/payment-mode"); 
     };
-
+    
     return (
         <Box m="20px">
             <Box display="flex" alignItems="center" mb="2px">
@@ -76,7 +60,7 @@ const Edit_Prod_Category = () => {
                     <ChevronLeftOutlined style={{ color: "#272829", fontSize: "38px" }} />
                 </IconButton>
                 <Box ml={1}>
-                    <Header title="Edit Product Category" />
+                    <Header title="New Payment Mode" />
                 </Box>
             </Box>
             <Box
@@ -90,8 +74,6 @@ const Edit_Prod_Category = () => {
                     onSubmit={handleFormSubmit}
                     initialValues={initialValues}
                     validationSchema={checkoutSchema}
-                    enableReinitialize
-
                 >
                     {({
                         values,
@@ -100,44 +82,47 @@ const Edit_Prod_Category = () => {
                         handleBlur,
                         handleChange,
                         handleSubmit,
+                        setFieldValue,
                     }) => (
                         <form onSubmit={handleSubmit}>
                             <Box display="grid" justifyContent="flex-end" gap="20px" gridTemplateColumns="0.5fr 3fr">
                                 
-                                <FormLabel sx={{ alignSelf: "center",fontWeight:"bold" }}>Category Name: </FormLabel>
+                                <FormLabel sx={{ alignSelf: "center", fontWeight: "bold" }}>Payment Mode Name: </FormLabel>
                                 <TextField
                                     fullWidth
                                     variant="filled"
                                     type="text"
-                                    label="Eg: Breakfast"
+                                    label="Eg: Credit Card"
                                     onBlur={handleBlur}
                                     onChange={handleChange}
-                                    value={values.category_desc}
-                                    name="category_desc"
-                                    error={touched.category_desc && Boolean(errors.category_desc)}
-                                    helperText={touched.category_desc && errors.category_desc}
+                                    value={values.pymt_mode_desc}
+                                    name="pymt_mode_desc"
+                                    error={touched.pymt_mode_desc && Boolean(errors.pymt_mode_desc)}
+                                    helperText={touched.pymt_mode_desc && errors.pymt_mode_desc}
                                 />
 
-                                <FormLabel sx={{ alignSelf: "center",fontWeight:"bold"}}>Display Sequence: </FormLabel>
-                                <TextField
+                                <FormLabel sx={{ fontWeight: "bold" }}>Payment Type:</FormLabel>
+                                <Select
                                     fullWidth
                                     variant="filled"
-                                    type="text"
-                                    label="Eg: 1"
-                                    onBlur={handleBlur}
+                                    value={values.pymt_type}
                                     onChange={handleChange}
-                                    value={values.display_seq}
-                                    name="display_seq"
-                                    error={touched.display_seq && Boolean(errors.display_seq)}
-                                    helperText={touched.display_seq && errors.display_seq}
-                                />
+                                    name="pymt_type"
+                                >
+                                    <MenuItem value={0}>Select Payment Type</MenuItem>
+                                    {pymt_type.map((pymt) => (
+                                        <MenuItem key={pymt.id} value={pymt.id}>
+                                            {pymt.pymt_type_desc}
+                                        </MenuItem>
+                                    ))}
+                                </Select>
 
-                                <FormLabel sx={{ alignSelf: "center", fontWeight:"bold" }}>is_in_use: </FormLabel>
+                                <FormLabel sx={{ alignSelf: "center", fontWeight: "bold" }}>Status: </FormLabel>
                                 <RadioGroup
                                     row
                                     name="is_in_use"
                                     value={values.is_in_use}
-                                    onChange={handleChange}
+                                    onChange={(e) => setFieldValue("is_in_use", Number(e.target.value))}
                                 >
                                     <FormControlLabel
                                         value={1}
@@ -150,6 +135,7 @@ const Edit_Prod_Category = () => {
                                         label="Inactive"
                                     />
                                 </RadioGroup>
+
                             </Box>
 
                             <Box display="flex" justifyContent="flex-end" mt="20px">
@@ -157,15 +143,15 @@ const Edit_Prod_Category = () => {
                                     type="submit"
                                     color="secondary"
                                     variant="contained"
-                                    fontWeight="bold"
-                                    sx={{ backgroundColor: "#FFB000",
+                                    sx={{
+                                        backgroundColor: "#FFB000",
                                         ":hover": {
                                             color: "black",
                                             backgroundColor: "#F5F5F5",
-                                          },
-                                     }}
+                                        },
+                                    }}
                                 >
-                                    UPDATE
+                                    CREATE
                                 </Button>
                             </Box>
                         </form>
@@ -176,4 +162,4 @@ const Edit_Prod_Category = () => {
     );
 };
 
-export default Edit_Prod_Category;
+export default Add_Payment_Mode;
