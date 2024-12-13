@@ -1,10 +1,10 @@
 {
     "db": {
         "host": "localhost",
-        "port": 5050,
-        "name": "pos2",
-        "user": "leehao",
-        "password": "leehao", 
+        "port": 5433,
+        "name": "pos",
+        "user": "postgres",
+        "password": "AT0Icantik", 
         "max_conn_pool": 10000,
         "idle_timeout": 30000,
         "conn_timeout": 30000
