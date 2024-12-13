@@ -26,43 +26,47 @@ const Edit_Prod_Category = () => {
         is_in_use:response?.is_in_use ||  1,  // Default to "active"
     };
 
+        // const handleFormSubmit = (values, actions) => {
+        //     // Make the POST request to the backend
+        //     fetch('http://your-backend-url/api/data', {
+        //         method: 'POST',
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //         },
+        //         body: JSON.stringify(values), // Send the form values
+        //     })
+        //         .then((response) => {
+        //             if (!response.ok) {
+        //                 throw new Error('Failed to submit form');
+        //             }
+        //             return response.json();
+        //         })
+        //         .then((data) => {
+        //             console.log('Success:', data);
+        //             actions.resetForm(); // Reset the form if needed
+        //             navigate("/meal-period"); // Redirect after successful submission
+        //         })
+        //         .catch((error) => {
+        //             console.error('Error:', error);
+        //             // Handle error appropriately (e.g., show error message)
+        //         });
+        // };
+
     const handleFormSubmit = (values, actions) => {
-        const formData = {
-            code: "prod-category",
-            axn: "s",
-            data: [
-                {
-                    current_uid: "tester",
-                    category_id: response?.category_id,
-                    category_desc: values.category_desc,
-                    is_in_use: String(values.is_in_use),
-                    display_seq: values.display_seq, 
-                },
-            ],
-        };
-    
-        fetch('http://localhost:38998/prodCat/s', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData), // Use the constructed payload
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to submit form');
+        console.log('body', JSON.stringify(values, null, 2));
+
+        /*
+
+            body {
+                "category_desc": "Breakfast",
+                "display_seq": 12,
+                "is_in_use": 1
                 }
-                return response.json();
-            })
-            .then((data) => {
-                console.log('Edit Data:', data);
-                actions.resetForm(); // Reset the form on successful submission
-                navigate("/product-category");
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Failed to edit data. Please try again.'); // Inform the user of the error
-            });
+
+        */
+    
+        actions.resetForm();
+        navigate("/product-category");
     };
 
     return (

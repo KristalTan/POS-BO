@@ -28,48 +28,52 @@ const Add_Meal_Period = () => {
         navigate("/meal-period");
     };
 
+    // const handleFormSubmit = (values, actions) => {
+    //     // Make the POST request to the backend
+    //     fetch('http://your-backend-url/api/data', {
+    //         method: 'POST',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //         },
+    //         body: JSON.stringify(values), // Send the form values
+    //     })
+    //         .then((response) => {
+    //             if (!response.ok) {
+    //                 throw new Error('Failed to submit form');
+    //             }
+    //             return response.json();
+    //         })
+    //         .then((data) => {
+    //             console.log('Success:', data);
+    //             actions.resetForm(); // Reset the form if needed
+    //             navigate("/meal-period"); // Redirect after successful submission
+    //         })
+    //         .catch((error) => {
+    //             console.error('Error:', error);
+    //             // Handle error appropriately (e.g., show error message)
+    //         });
+    // };
+
     const handleFormSubmit = (values, actions) => {
-        const formData = {
-            code: "setting-meal-period",
-            axn: "s",
-            data: [
-                {
-                    current_uid: "tester", // Replace with the current user's UID if dynamic
-                    meal_period_id: "",   // Leave empty for a new record
-                    meal_period_desc: values.meal_period_desc,
-                    start_time: values.start_time,
-                    end_time: values.end_time,
-                    is_in_use: String(values.is_in_use), // Convert to string as required
-                    display_seq: values.display_seq, // Ensure 6-digit sequence
-                },
-            ],
-        };
+        console.log('body', JSON.stringify(values, null, 2));
+
+        /*
+
+            body: {
+                "meal_period_desc": "Lunch",
+                "start_time": "15:24",
+                "end_time": "20:24",
+                "is_in_use": 1,
+                "display_seq": "q122"
+            }
+
+        */
     
-        fetch('http://localhost:38998/mp/s', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(formData), // Use the constructed payload
-        })
-            .then((response) => {
-                if (!response.ok) {
-                    throw new Error('Failed to submit form');
-                }
-                return response.json();
-            })
-            .then((data) => {
-                console.log('Add Data:', data);
-                actions.resetForm(); // Reset the form on successful submission
-                navigate("/meal-period"); // Redirect to the meal period list
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-                alert('Failed to create data. Please try again.'); // Inform the user of the error
-            });
+        actions.resetForm();
+        navigate("/meal-period"); 
     };
     
-
+    
 
     return (
         <Box m="20px">
@@ -132,7 +136,6 @@ const Add_Meal_Period = () => {
                                         name="start_time"
                                         error={touched.start_time && Boolean(errors.start_time)}
                                         helperText={touched.start_time && errors.start_time}
-                                        
                                     />
                                     
                                     {/* Add "to" between the time fields */}
