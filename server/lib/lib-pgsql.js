@@ -63,10 +63,10 @@ const pgp = require('pg-promise')(initOptions)
 
 const cn = {
     host: 'localhost',
-    port: 5432,
-    database: 'pos2',
-    user: 'leehao',
-    password: 'leehao',
+    port: 5433,
+    database: 'pos',
+    user: 'postgres',
+    password: 'AT0Icantik',
     max: 30 // use up to 30 connections
 }
 const db = pgp(cn);

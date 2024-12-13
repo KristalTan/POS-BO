@@ -49,7 +49,7 @@ const initialRows = [
 
 const User_Group = () => {
     const [page, setPage] = React.useState(0);
-    const [rowsPerPage, setRowsPerPage] = React.useState(5);
+    const [rowsPerPage, setRowsPerPage] = React.useState(10);
     const [rows, setRows] = React.useState(initialRows);
     const [statusSortAsc, setStatusSortAsc] = React.useState(true);
     const navigate = useNavigate(); 
@@ -141,7 +141,7 @@ const User_Group = () => {
         </Box>
         
         <TablePagination
-          rowsPerPageOptions={[5, 10, 15]}
+            rowsPerPageOptions={[10, 15, 20]}
           component="div"
           count={rows.length}
           rowsPerPage={rowsPerPage}
