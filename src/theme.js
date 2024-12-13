@@ -2,6 +2,9 @@ import { createTheme } from "@mui/material";
 import { useMemo } from "react";
 import { useState } from "react";
 import { createContext } from "react";
+import { styled } from "@mui/material/styles";
+import TableCell, { tableCellClasses } from "@mui/material/TableCell";
+import TableRow from "@mui/material/TableRow";
 
 // Color Design Tokens
 export const tokens = (mode) => ({
@@ -121,6 +124,30 @@ export const tokens = (mode) => ({
         },
       }),
 });
+
+// Custom Components
+export const StyledTableCell = styled(TableCell)(({ theme }) => ({
+  [`&.${tableCellClasses.head}`]: {
+    backgroundColor: "#FFB000",
+    color: "black",
+    fontSize: "14px",
+    fontWeight: "bold",
+    padding: theme.spacing(1.2),
+  },
+  [`&.${tableCellClasses.body}`]: {
+    fontSize: 14,
+    padding: theme.spacing(1),
+  },
+}));
+
+export const StyledTableRow = styled(TableRow)(({ theme }) => ({
+  "&:nth-of-type(odd)": {
+    backgroundColor: theme.palette.action.hover,
+  },
+  "&:last-child td, &:last-child th": {
+    border: 0,
+  },
+}));
 
 // Mui Theme Settings
 export const themeSettings = (mode) => {

@@ -15,9 +15,6 @@ const initialValues = {
 const checkoutSchema = yup.object().shape({
     category_desc: yup.string().required("Category Name is required"),
     is_in_use: yup.string().required("Status is required"),
-    display_seq: yup
-        .number()
-        .typeError("Display Sequence must be a number"),
 });
 
 const Add_Prod_Category = () => {
@@ -28,20 +25,42 @@ const Add_Prod_Category = () => {
 
     //
     const handleFormSubmit = (values, actions) => {
-        console.log('body', JSON.stringify(values, null, 2));
-
-        /*
-
-            body {
-                "category_desc": "Breakfast",
-                "display_seq": "1",
-                "is_in_use": 1
-                }
-
-        */
+        const formData = {
+            code: "prod-category",
+            axn: "s",
+            data: [
+                {
+                    current_uid: "tester",
+                    category_id: "",
+                    category_desc: values.category_desc,
+                    is_in_use: String(values.is_in_use),
+                    display_seq: values.display_seq, 
+                },
+            ],
+        };
     
-        actions.resetForm();
-        navigate("/product-category");
+        fetch('http://localhost:38998/prodCat/s', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData), // Use the constructed payload
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Add Data:', data);
+                actions.resetForm(); // Reset the form on successful submission
+                navigate("/product-category");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to create data. Please try again.'); // Inform the user of the error
+            });
     };
 
     return (
