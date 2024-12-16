@@ -112,15 +112,26 @@ insert into tb_action (action_id, action_code, action_desc, sql_q, group_code, i
 ('883e499e-6b3d-4ad2-9960-47a1db316565', 'app-cashiering-shift::fc', 'Cashiering - Cashiering Shift Force Close', 'pr_cashiering_force_close', 'Cashiering Shift', 1, '000080', current_timestamp, 'admin', 0),
 
 -- Module: Day-end Closing
+('97ccfb72-3ce5-45c7-9032-7683fedd5e5a', 'app-day-end-closing::c', 'Day End Closing - Check', 'fn_day_end_close_prepare', 'Day End Closing', 1, '000095', current_timestamp, 'admin', 1),
+('987f34fb-983c-4e53-b8bb-1fd4efeae974', 'app-day-end-closing::d', 'Day End Closing - Do day end closing', 'pr_day_end_close', 'Day End Closing', 1, '000096', current_timestamp, 'admin', 0),
+
+-- Module - Notification
+('56891f62-3e3e-4412-82e5-2d50a5c6c670', 'app-notif::l', 'Notification - View Notification', 'fn_notif_list', 'Notification', 1, '000097', current_timestamp, 'admin', 0),
+('0229c031-6d02-42a3-863e-16ef262f87e1', 'app-notif::s', 'Notification - Notification Save', 'pr_notif_save', 'Notification', 1, '000098', current_timestamp, 'admin', 0),
+
+-- Module - Schedule Report
+('378a64e1-c2c6-4613-aa72-ffd02a72c5c2', 'app-sch-rpt::l', 'Schedule Report - View Schedule Report', 'fn_sch_rpt_list', 'Schedule Report', 1, '000099', current_timestamp, 'admin', 0),
+('652676f4-1584-49b9-a6d3-e5e86347358b', 'app-sch-rpt::s', 'Schedule Report - Schedule Report Save', 'pr_sch_rpt_save', 'Schedule Report', 1, '000100', current_timestamp, 'admin', 0),
 
 -- Module: Dashboard
+('269a7bc9-03c4-4b08-b630-56ca05a9d14a', 'app-dashboard::l', 'Dashboard - View POS Dashboard', 'fn_pos_dashboard', 'Dashboard', 1, '000101', current_timestamp, 'admin', 0),
 
 -- Module: Reports
 ('ddd5f198-1447-4d3b-8b79-d1dbc8f41027', 'app-report::dar', 'Report - Daily Availability Report', 'fn_rpt_daily_availability', 'Report', 0, '000083', current_timestamp, 'admin', 0),
 ('d26ee328-d90d-4cd5-92b2-19e96c402e60', 'app-report::iss', 'Report - Item Sales Summary', 'fn_rpt_daily_availability', 'Report', 0, '000084', current_timestamp, 'admin', 0),
 ('07074c6f-f8b4-4b52-9942-0aa58637f045', 'app-report::ds', 'Report - Daily Summary', 'fn_rpt_daily_availability', 'Report', 0, '000085', current_timestamp, 'admin', 0),
 ('300ae174-59f9-4f92-93df-2c1c625319eb', 'app-report::ils', 'Report - Invoice Listing Summary', 'fn_rpt_invoice_listing_summ', 'Report', 0, '000086', current_timestamp, 'admin', 0),
-('6a40f2f6-d5d4-4e4f-a863-04bf5c577a6d', 'app-report::i86', 'Report - Item 86', 'fn_rpt_item86', 'Report', 0, '000087', current_timestamp, 'admin', 1),
+('6a40f2f6-d5d4-4e4f-a863-04bf5c577a6d', 'app-report::i86', 'Report - Item 86', 'fn_rpt_item86', 'Report', 0, '000087', current_timestamp, 'admin', 0),
 ('a064d444-48a9-4d22-b6c6-763be83a5bb0', 'app-report::ccr', 'Report - Cashiering Collection Report', 'fn_rpt_cashiering_collection', 'Report', 0, '000088', current_timestamp, 'admin', 0),
 ('583e859c-dc9e-43cd-a0e9-1e39212405c6', 'app-report::ivr', 'Report - Item Void Report', 'fn_rpt_item_void', 'Report', 0, '000089', current_timestamp, 'admin', 0),
 ('9671ad91-42d9-4454-8ca4-7aab13ac5b18', 'app-report::bvr', 'Report - Bill Void Report', 'fn_rpt_bill_void', 'Report', 0, '000090', current_timestamp, 'admin', 0),
@@ -129,9 +140,35 @@ insert into tb_action (action_id, action_code, action_desc, sql_q, group_code, i
 ('4cd4e494-cdb4-44e5-a394-dfeb31dc4de6', 'app-report::sstr', 'Report - Sales & Service Tax Report', 'fn_rpt_sst', 'Report', 0, '000093', current_timestamp, 'admin', 0),
 ('d46d4192-ddcc-44f1-9b20-23f4247185d1', 'app-report::rss', 'Report - Restaurant Sales Summary', 'fn_rpt_restaurant_sales_summ', 'Report', 0, '000094', current_timestamp, 'admin', 0)
 
-
-
-select * from tb_action
+INSERT INTO tb_acn_rlt_tb (created_on, created_by, action_id, rlt_tb) VALUES 
+(current_timestamp, 'admin', '1296c008-4372-485f-91cf-81a544f476c2', 'tb_prod_category'),
+(current_timestamp, 'admin', 'bcc1296e-0f45-4d02-be5b-f110a1681c0c', 'tb_product'),
+(current_timestamp, 'admin', '42fb72be-22d0-4f39-95db-377367c2d00f', 'tb_modifier_group'),
+(current_timestamp, 'admin', 'c2332147-f3fc-415c-aa91-7bb3cd720cdb', 'tb_modifier_option'),
+(current_timestamp, 'admin', '199aa45b-7db2-4d2e-9910-f61861b09b4a', 'tb_modifier_item_link'),
+(current_timestamp, 'admin', '234acc1f-6311-46d2-9d27-9b156e529e46', 'tb_product_availability'),
+(current_timestamp, 'admin', 'c9bf4e0b-b404-442e-9050-8b0294ff6cbb', 'tb_sys_setting'),
+(current_timestamp, 'admin', 'bd23cb72-e6be-4e1c-b61f-d9c6a21adc85', 'tb_store'),
+(current_timestamp, 'admin', 'b1b87b82-7bdd-4720-8b1a-a7f7c906aefc', 'tb_tax'),
+(current_timestamp, 'admin', 'a4c5b496-c22c-430e-9fd5-7de7c8e92acd', 'tb_pymt_mode'),
+(current_timestamp, 'admin', '7f1fdef5-737d-4fdb-9539-7e8071fccb56', 'tb_meal_period'),
+(current_timestamp, 'admin', 'c9b99fa5-de79-4196-89b6-8aea912143a5', 'tb_receipt_temp'),
+(current_timestamp, 'admin', '9ec74f79-a1c0-4ff8-ad0c-b97d91771644', 'tb_table_section'),
+(current_timestamp, 'admin', '4d91c40a-feef-47e5-b542-dba002510b62', 'tb_table'),
+(current_timestamp, 'admin', '5a04fe24-bb9f-4096-8cc2-e8d11704bcd6', 'tb_pos_station'),
+(current_timestamp, 'admin', '38fe1f07-0572-48fe-b97e-dfb576ed535f', 'tb_pos_printer'),
+(current_timestamp, 'admin', '04032095-2a06-4ac3-bbb0-4873a56b1856', 'tb_guest'),
+(current_timestamp, 'admin', 'f2737b0c-9359-4486-815c-b38b2015eb4d', 'tb_user_group'),
+(current_timestamp, 'admin', 'c1ff314c-10e6-4203-804b-f406790765ad', 'tb_user_group_action'),
+(current_timestamp, 'admin', '543abc1b-a347-4ab0-85d1-664362579925', 'tb_users'),
+(current_timestamp, 'admin', '31544af9-4b84-45fe-9a1d-1807785cd2cf', 'tb_ordre_trans_item_line'),
+(current_timestamp, 'admin', 'e4443c40-8521-4bbd-a9ae-3d444e7a0cd2', 'tb_order_trans'),
+(current_timestamp, 'admin', 'c7e32761-34a0-44b8-8746-91e40d875a68', 'tb_order_trans_item_line_void'),
+(current_timestamp, 'admin', '5a4b20a0-f7d3-425d-b093-022c8160eb6b', 'tb_order_trans_void_log'),
+(current_timestamp, 'admin', 'a4ae5797-8bf4-422a-9d75-4234d6eda663', 'tb_order_trans_item_line'),
+(current_timestamp, 'admin', '53c09823-1cc1-4f81-a29b-68b29d7870a8', 'tb_cashiering'),
+(current_timestamp, 'admin', '6e14aa79-422d-4c81-814a-74d58b908ae0', 'tb_cashiering'),
+(current_timestamp, 'admin', '883e499e-6b3d-4ad2-9960-47a1db316565', '')
 
 insert into tb_action_param (action_param_id, action_id, action_param_name, data_type, seq, is_compulsory, created_on, created_by) values
 -- prod-category::s
