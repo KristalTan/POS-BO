@@ -23,29 +23,137 @@ const checkoutSchema = yup.object().shape({
 const Store = () => {
     const navigate = useNavigate();
 
-    const initialValues = {
-        store_id: 1,
-        store_name: "ABC Sdn Bhd",
-        addr_line_1: "123 Road ABC",
-        addr_line_2: "",
-        city: "Petaling Jaya",
-        state: 0,
-        post_code: "46000",
-        country: 1,
-        phone_number: "888-888888",
-        email: "abc@abc.com",
-        website: "www.abc.com",
-        gst_id: "123456ABC",
-        sst_id: "12345ABC",
-        business_registration_num: "123456ABC",
-        receipt_temp_id: 1,
-    };
+    // const initialValues = {
+    //     store_id: 1,
+    //     store_name: "ABC Sdn Bhd",
+    //     addr_line_1: "123 Road ABC",
+    //     addr_line_2: "",
+    //     city: "Petaling Jaya",
+    //     state: 0,
+    //     post_code: "46000",
+    //     country: 1,
+    //     phone_number: "888-888888",
+    //     email: "abc@abc.com",
+    //     website: "www.abc.com",
+    //     gst_id: "123456ABC",
+    //     sst_id: "12345ABC",
+    //     business_registration_num: "123456ABC",
+    //     receipt_temp_id: 1,
+    // };
+
+    React.useEffect(() => {
+        const fetchData = async () => {
+          try {
+            const [response1, response2] = await Promise.all([
+              fetch("http://localhost:38998/ts/l", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  code: "setting-table-sec",
+                  axn: "l",
+                  data: [
+                    {
+                      current_uid: "tester",
+                      is_in_use: -1,
+                    },
+                  ],
+                }),
+              }),
+              fetch("http://localhost:38998/t/l", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                  code: "setting-table",
+                  axn: "l",
+                  data: [
+                    {
+                      current_uid: "tester",
+                      is_in_use: -1,
+                    },
+                  ],
+                }),
+              }),
+            ]);
+      
+            if (!response1.ok || !response2.ok) {
+              throw new Error(`HTTP error!`);
+            }
+      
+            const [result1, result2] = await Promise.all([
+              response1.json(),
+              response2.json(),
+            ]);
+      
+            if (
+              result1?.data?.data &&
+              Array.isArray(result1.data.data)
+            ) {
+              setSections(result1.data.data); // Store the first response in state
+            } else {
+              console.error("Unexpected response structure in result1", result1);
+              setSections([]);
+            }
+      
+            if (
+              result2?.data?.data &&
+              Array.isArray(result2.data.data)
+            ) {
+              setTables(result2.data.data); // Store the second response in state
+            } else {
+              console.error("Unexpected response structure in result2", result2);
+              setTables([]);
+            }
+      
+          } catch (error) {
+            console.error("Failed to fetch data", error);
+            setSections([]);
+            setTables([]);
+          }
+        };
+      
+        fetchData();
+      }, []);
+      
 
     const handleFormSubmit = (values, actions) => {
-        console.log("Submitted Data", JSON.stringify(values, null, 2));
+        const formData = {
+            code: "setting-table",
+            axn: "s",
+            data: [
+                {
+                    current_uid: "tester",
+                    table_id: "",
+                    table_desc: values.table_desc,
+                    table_section_id: values.table_section_id,
+                    is_in_use: String(values.is_in_use),
+                    display_seq: values.display_seq, 
 
-        actions.resetForm();
-        navigate("/store");
+                },
+            ],
+        };
+    
+        fetch('http://localhost:38998/t/s', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData), // Use the constructed payload
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Add Data:', data);
+                actions.resetForm(); // Reset the form on successful submission
+                navigate("/table");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to create data. Please try again.'); // Inform the user of the error
+            });
     };
 
     return (

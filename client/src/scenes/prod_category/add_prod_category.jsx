@@ -23,7 +23,6 @@ const Add_Prod_Category = () => {
         navigate("/product-category");
     };
 
-    //
     const handleFormSubmit = (values, actions) => {
         const formData = {
             code: "prod-category",

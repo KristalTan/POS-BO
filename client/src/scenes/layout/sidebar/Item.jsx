@@ -1,5 +1,6 @@
 import { MenuItem } from "react-pro-sidebar";
 import { Link, useLocation } from "react-router-dom";
+import * as React from "react";
 
 const Item = ({ title, path, icon }) => {
   const location = useLocation();

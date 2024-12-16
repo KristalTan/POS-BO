@@ -8,12 +8,10 @@ import { ChevronLeftOutlined } from '@mui/icons-material';
 const initialValues = {
     tax_code: "",
     tax_desc: "",
-    tax_pct: 0,
+    tax_pct: "",
     is_in_use: 1,  // Default to "Active"
     display_seq: "",
 };
-
-
 
 const checkoutSchema = yup.object().shape({
     tax_code: yup.string().required("Tax Code is required"),
@@ -27,54 +25,46 @@ const Add_Tax = () => {
     const prevPage = () => {
         navigate("/tax");
     };
-
-    // const handleFormSubmit = (values, actions) => {
-    //     // Make the POST request to the backend
-    //     fetch('http://your-backend-url/api/data', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(values), // Send the form values
-    //     })
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to submit form');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             console.log('Success:', data);
-    //             actions.resetForm(); // Reset the form if needed
-    //             navigate("/meal-period"); // Redirect after successful submission
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //             // Handle error appropriately (e.g., show error message)
-    //         });
-    // };
-
     const handleFormSubmit = (values, actions) => {
-        console.log('body', JSON.stringify(values, null, 2));
-
-        /*
-
-            body: {
-                "meal_period_desc": "Lunch",
-                "start_time": "15:24",
-                "end_time": "20:24",
-                "is_in_use": 1,
-                "display_seq": "q122"
-            }
-
-        */
+        const formData = {
+            code: 'setting-tax',
+            axn: "s",
+            data: [
+                {
+                    current_uid: "tester",
+                    tax_id: "",
+                    tax_code: values.tax_code,
+                    tax_desc: values.tax_desc,
+                    tax_pct: values.tax_pct,
+                    is_in_use: String(values.is_in_use),
+                    display_seq: values.display_seq, 
+                },
+            ],
+        };
     
-        actions.resetForm();
-        navigate("/tax"); 
+        fetch('http://localhost:38998/tax/s', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData), // Use the constructed payload
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Add Data:', data);
+                actions.resetForm(); // Reset the form on successful submission
+                navigate("/tax");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to create data. Please try again.'); // Inform the user of the error
+            });
     };
-    
-    
-
     return (
         <Box m="20px">
             <Box display="flex" alignItems="center" mb="2px">

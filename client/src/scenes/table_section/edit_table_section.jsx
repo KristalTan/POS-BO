@@ -25,49 +25,43 @@ const Edit_Table_Section = () => {
         navigate("/table-sec");
     };
 
-    // const handleFormSubmit = (values, actions) => {
-    //     // Make the POST request to the backend
-    //     fetch('http://your-backend-url/api/data', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(values), // Send the form values
-    //     })
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to submit form');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             console.log('Success:', data);
-    //             actions.resetForm(); // Reset the form if needed
-    //             navigate("/meal-period"); // Redirect after successful submission
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //             // Handle error appropriately (e.g., show error message)
-    //         });
-    // };
-
     const handleFormSubmit = (values, actions) => {
-        console.log('body', JSON.stringify(values, null, 2));
-
-        /*
-
-            body {
-                "meal_period_desc": "Dinner",
-                "start_time": "07:00",
-                "end_time": "11:59",
-                "is_in_use": 1,
-                "display_seq": "a8"
-            }
-
-        */
+        const formData = {
+            code: "setting-table-sec",
+            axn: "s",
+            data: [
+                {
+                    current_uid: "tester",
+                    table_section_id: response?.table_section_id,
+                    table_section_name: values.table_section_name,
+                    is_in_use: String(values.is_in_use),
+                    display_seq: values.display_seq, 
+                },
+            ],
+        };
     
-        actions.resetForm();
-        navigate("/table-sec"); 
+        fetch('http://localhost:38998/ts/s', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData), // Use the constructed payload
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Edit Data:', data);
+                actions.resetForm(); // Reset the form on successful submission
+                navigate("/table-sec");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to create data. Please try again.'); // Inform the user of the error
+            });
     };
 
     return (
@@ -112,7 +106,7 @@ const Edit_Table_Section = () => {
                                     onBlur={handleBlur}
                                     onChange={handleChange}
                                     value={values.table_section_name}
-                                    name="meal_period_desc"
+                                    name="table_section_name"
                                     error={touched.table_section_name && Boolean(errors.table_section_name)}
                                     helperText={touched.table_section_name && errors.table_section_name}
                                 />

@@ -4,6 +4,7 @@ import { Formik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as yup from "yup";
 import { ChevronLeftOutlined } from '@mui/icons-material';
+import * as React from "react";
 
 const initialValues = {
     table_desc: "",
@@ -13,13 +14,13 @@ const initialValues = {
     display_seq: "",
 };
 
-const table_section = [
-    { table_section_id: 1, table_section_name: "Zone A", is_in_use: 1, display_seq: 12 },
-    { table_section_id: 2, table_section_name: "Zone B", is_in_use: 1, display_seq: 10 },
-    { table_section_id: 3, table_section_name: "Zone C", is_in_use: 1, display_seq: 8 },
-    { table_section_id: 4, table_section_name: "Zone D", is_in_use: 0, display_seq: 5 },
-    { table_section_id: 5, table_section_name: "Zone E", is_in_use: 1, display_seq: 15 },
-  ];
+// const table_section = [
+//     { table_section_id: 1, table_section_name: "Zone A", is_in_use: 1, display_seq: 12 },
+//     { table_section_id: 2, table_section_name: "Zone B", is_in_use: 1, display_seq: 10 },
+//     { table_section_id: 3, table_section_name: "Zone C", is_in_use: 1, display_seq: 8 },
+//     { table_section_id: 4, table_section_name: "Zone D", is_in_use: 0, display_seq: 5 },
+//     { table_section_id: 5, table_section_name: "Zone E", is_in_use: 1, display_seq: 15 },
+//   ];
 
 const checkoutSchema = yup.object().shape({
     table_desc: yup.string().required("Table Name is required"),
@@ -32,54 +33,88 @@ const Add_Table_Location = () => {
     const prevPage = () => {
         navigate("/table");
     };
+    const [tableSecOptions, setTableSecOptions] = React.useState([]);
 
-    // const handleFormSubmit = (values, actions) => {
-    //     // Make the POST request to the backend
-    //     fetch('http://your-backend-url/api/data', {
-    //         method: 'POST',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         body: JSON.stringify(values), // Send the form values
-    //     })
-    //         .then((response) => {
-    //             if (!response.ok) {
-    //                 throw new Error('Failed to submit form');
-    //             }
-    //             return response.json();
-    //         })
-    //         .then((data) => {
-    //             console.log('Success:', data);
-    //             actions.resetForm(); // Reset the form if needed
-    //             navigate("/meal-period"); // Redirect after successful submission
-    //         })
-    //         .catch((error) => {
-    //             console.error('Error:', error);
-    //             // Handle error appropriately (e.g., show error message)
-    //         });
-    // };
+    React.useEffect(() => {
+        const fetchData = async () => {
+            try {
+                const response = await fetch("http://localhost:38998/ts/l", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        code: "setting-table-sec",
+                        axn: "l",
+                        data: [
+                            {
+                                current_uid: "tester",
+                                is_in_use: -1,
+                            },
+                        ],
+                    }),
+                });
+    
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+    
+                const result = await response.json();
+                if (result && result.data && Array.isArray(result.data.data)) {
+                    setTableSecOptions(result.data.data);
+                } else {
+                    console.error("Unexpected response structure:", result);
+                    setTableSecOptions([]);
+                }
+            } catch (error) {
+                console.error("Failed to fetch payment modes:", error);
+                setTableSecOptions([]);
+            }
+        };
+    
+        fetchData();
+    }, []);
 
     const handleFormSubmit = (values, actions) => {
-        console.log('body', JSON.stringify(values, null, 2));
+        const formData = {
+            code: "setting-table",
+            axn: "s",
+            data: [
+                {
+                    current_uid: "tester",
+                    table_id: "",
+                    table_desc: values.table_desc,
+                    table_section_id: values.table_section_id,
+                    is_in_use: String(values.is_in_use),
+                    display_seq: values.display_seq, 
 
-        /*
-
-            body: {
-                "table_desc": "A1",
-                "table_section_id": 2,
-                "qr_code": "",
-                "is_in_use": 1,
-                "display_seq": "a123"
-            }
-
-        */
+                },
+            ],
+        };
     
-        actions.resetForm();
-        navigate("/table"); 
+        fetch('http://localhost:38998/t/s', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(formData), // Use the constructed payload
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error('Failed to submit form');
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log('Add Data:', data);
+                actions.resetForm(); // Reset the form on successful submission
+                navigate("/table");
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+                alert('Failed to create data. Please try again.'); // Inform the user of the error
+            });
     };
-    
-    
-
     return (
         <Box m="20px">
             <Box display="flex" alignItems="center" mb="2px">
@@ -137,7 +172,7 @@ const Add_Table_Location = () => {
                                     name="table_section_id"
                                 >
                                     <MenuItem value={0}>Select Table Section</MenuItem>
-                                    {table_section.filter(sec => sec.is_in_use).map(sec => (
+                                    {tableSecOptions.filter(sec => sec.is_in_use).map(sec => (
                                         <MenuItem key={sec.table_section_id} value={sec.table_section_id}>
                                             {sec.table_section_name}
                                         </MenuItem>
